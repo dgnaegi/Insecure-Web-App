@@ -36,7 +36,7 @@ def login():
         zip_code = request.form['zip_code']
         cursor = mysql.connection.cursor()
 
-        # Vulnerability: SQL Injection
+        # Vulnerability: SQL injection, i.e. by using the following zip code: 123' OR '1'='1
         query = f"SELECT * FROM parcels WHERE reference='{reference}' AND zip_code='{zip_code}'"
         cursor.execute(query)
 
@@ -72,10 +72,9 @@ def tracking():
         states = cursor.fetchall()
         return render_template('tracking.html', parcel=parcel, states=states)
 
-@app.route('/logout')
+@app.route('/logout', methods=['POST'])
 def logout():
     session.pop('loggedin', None)
     session.pop('reference', None)
-    response = redirect(url_for('entryprotection'))
-    response.delete_cookie('auth')
+    response = redirect(url_for('login'))
     return response
