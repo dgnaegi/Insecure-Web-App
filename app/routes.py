@@ -52,22 +52,25 @@ def login():
 @app.route('/tracking', methods=['GET', 'POST'])
 @login_required
 def tracking():
-    if 'reference' not in session:
-        return redirect(url_for('login'))
-    reference = session['reference']
-    cursor = mysql.connection.cursor()
     if request.method == 'POST':
+
+        # Vulnerability: IDOR
+        reference = request.form['reference']
         new_address = request.form['new_address']
         new_zip_code = request.form['new_zip_code']
+        cursor = mysql.connection.cursor()
         cursor.execute("UPDATE parcels SET delivery_address=%s, zip_code=%s WHERE reference=%s", (new_address, new_zip_code, reference))
         mysql.connection.commit()
         flash('Delivery address and ZIP code updated successfully.', 'info')
         return redirect(url_for('tracking'))
-    cursor.execute("SELECT * FROM parcels WHERE reference=%s", (reference,))
-    parcel = cursor.fetchone()
-    cursor.execute("SELECT * FROM parcel_states WHERE parcel_id=%s", (parcel['id'],))
-    states = cursor.fetchall()
-    return render_template('tracking.html', parcel=parcel, states=states)
+    else:
+        reference = session.get('reference')
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT * FROM parcels WHERE reference=%s", (reference,))
+        parcel = cursor.fetchone()
+        cursor.execute("SELECT * FROM parcel_states WHERE parcel_id=%s", (parcel['id'],))
+        states = cursor.fetchall()
+        return render_template('tracking.html', parcel=parcel, states=states)
 
 @app.route('/logout')
 def logout():
