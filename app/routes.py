@@ -53,12 +53,17 @@ def login():
 @login_required
 def tracking():
     if request.method == 'POST':
-
+        
         # Vulnerability: IDOR
         reference = request.form['reference']
         new_address = request.form['new_address']
         new_zip_code = request.form['new_zip_code']
         cursor = mysql.connection.cursor()
+        cursor.execute("SELECT * FROM parcels WHERE reference=%s", (reference,))
+        parcel = cursor.fetchone()
+        if not parcel:
+            flash('Parcel not found', 'error')
+            return redirect(url_for('tracking'))
         cursor.execute("UPDATE parcels SET delivery_address=%s, zip_code=%s WHERE reference=%s", (new_address, new_zip_code, reference))
         mysql.connection.commit()
         flash('Delivery address and ZIP code updated successfully.', 'info')
@@ -71,6 +76,7 @@ def tracking():
         cursor.execute("SELECT * FROM parcel_states WHERE parcel_id=%s", (parcel['id'],))
         states = cursor.fetchall()
         return render_template('tracking.html', parcel=parcel, states=states)
+
 
 @app.route('/logout', methods=['POST'])
 def logout():
