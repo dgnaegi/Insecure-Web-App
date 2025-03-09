@@ -22,10 +22,10 @@ CREATE TABLE IF NOT EXISTS parcel_states (
 );
 
 INSERT INTO parcels (reference, zip_code, phone, verification_code, first_name, last_name, delivery_address) VALUES
-('RF-81233-HD', '89784', '', NULL, 'Harry', 'Potter', '123 Elm St'),
-('UZ-12311-LO', '12382', '', NULL, 'Hermione', 'Granger', '456 Oak St'),
-('PK-12388-RI', '38474', '', NULL, 'Albus', 'Dumbledore', '789 Pine St'),
-('AZ-18983-LI', '93847', '', NULL, 'Severus', 'Snape', '101 Maple St');
+('RC-837485', '89784', '', NULL, 'Harry', 'Potter', '123 Elm St'),
+('RC-837486', '12382', '', NULL, 'Hermione', 'Granger', '456 Oak St'),
+('AB-237451', '38474', '', NULL, 'Albus', 'Dumbledore', '789 Pine St'),
+('HU-237452', '93847', '', NULL, 'Severus', 'Snape', '101 Maple St');
 
 INSERT INTO parcel_states (parcel_id, state) VALUES
 (1, 'Shipped'),

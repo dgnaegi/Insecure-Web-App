@@ -35,7 +35,11 @@ def login():
         reference = request.form['reference']
         zip_code = request.form['zip_code']
         cursor = mysql.connection.cursor()
-        cursor.execute("SELECT * FROM parcels WHERE reference=%s AND zip_code=%s", (reference, zip_code))
+
+        # Vulnerability: SQL Injection
+        query = f"SELECT * FROM parcels WHERE reference='{reference}' AND zip_code='{zip_code}'"
+        cursor.execute(query)
+
         account = cursor.fetchone()
         if account:
             session['loggedin'] = True
