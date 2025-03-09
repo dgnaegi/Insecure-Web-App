@@ -6,7 +6,7 @@
     <strong>Name:</strong> {{ parcel.first_name }} {{ parcel.last_name }}
     <br><br>
     <strong>Delivery Address:</strong><br>
-    {{ parcel.delivery_address }}</p>
+    {{ parcel.delivery_address }}<br>{{ parcel.zip_code }}</p>
     <h3>Parcel States</h3>
     <table>
         <thead>
@@ -25,8 +25,10 @@
         </tbody>
     </table>
     <form method="post"><br><br>
-        <label for="new_address">Want to send your parcel elswhere? Update your address here:</label><br>
-        <input type="text" id="new_address" name="new_address" required>
-        <button type="submit">Update Address</button>
+        <label for="new_address">Want to send your parcel elsewhere? Update your address here:</label><br>
+        <input type="text" id="new_address" name="new_address" required><br>
+        <label for="new_zip_code">Update ZIP Code:</label><br>
+        <input type="text" id="new_zip_code" name="new_zip_code" required><br>
+        <button type="submit">Update Address and ZIP Code</button>
     </form>
 {% endblock %}

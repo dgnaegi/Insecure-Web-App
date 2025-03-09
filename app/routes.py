@@ -54,9 +54,10 @@ def tracking():
     cursor = mysql.connection.cursor()
     if request.method == 'POST':
         new_address = request.form['new_address']
-        cursor.execute("UPDATE parcels SET delivery_address=%s WHERE reference=%s", (new_address, reference))
+        new_zip_code = request.form['new_zip_code']
+        cursor.execute("UPDATE parcels SET delivery_address=%s, zip_code=%s WHERE reference=%s", (new_address, new_zip_code, reference))
         mysql.connection.commit()
-        flash('Delivery address updated successfully.', 'info')
+        flash('Delivery address and ZIP code updated successfully.', 'info')
         return redirect(url_for('tracking'))
     cursor.execute("SELECT * FROM parcels WHERE reference=%s", (reference,))
     parcel = cursor.fetchone()
