@@ -52,9 +52,17 @@ def tracking():
         return redirect(url_for('login'))
     reference = session['reference']
     cursor = mysql.connection.cursor()
+    if request.method == 'POST':
+        new_address = request.form['new_address']
+        cursor.execute("UPDATE parcels SET delivery_address=%s WHERE reference=%s", (new_address, reference))
+        mysql.connection.commit()
+        flash('Delivery address updated successfully.', 'info')
+        return redirect(url_for('tracking'))
     cursor.execute("SELECT * FROM parcels WHERE reference=%s", (reference,))
     parcel = cursor.fetchone()
-    return render_template('tracking.html', parcel=parcel)
+    cursor.execute("SELECT * FROM parcel_states WHERE parcel_id=%s", (parcel['id'],))
+    states = cursor.fetchall()
+    return render_template('tracking.html', parcel=parcel, states=states)
 
 @app.route('/logout')
 def logout():

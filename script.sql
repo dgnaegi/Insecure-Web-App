@@ -4,7 +4,7 @@ USE parcel_service;
 
 CREATE TABLE IF NOT EXISTS parcels (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    reference VARCHAR(9) NOT NULL,
+    reference VARCHAR(15) NOT NULL,
     zip_code VARCHAR(10) NOT NULL,
     phone VARCHAR(15) NOT NULL,
     verification_code VARCHAR(6),
@@ -21,12 +21,11 @@ CREATE TABLE IF NOT EXISTS parcel_states (
     FOREIGN KEY (parcel_id) REFERENCES parcels(id)
 );
 
--- Insert dummy data
 INSERT INTO parcels (reference, zip_code, phone, verification_code, first_name, last_name, delivery_address) VALUES
-('123456789', '12345', '555-1234', NULL, 'John', 'Doe', '123 Elm St'),
-('987654321', '54321', '555-4321', NULL, 'Jane', 'Smith', '456 Oak St'),
-('111222333', '11111', '555-1111', NULL, 'Alice', 'Johnson', '789 Pine St'),
-('444555666', '22222', '555-2222', NULL, 'Bob', 'Brown', '101 Maple St');
+('RF-81233-HD', '89784', '', NULL, 'Harry', 'Potter', '123 Elm St'),
+('UZ-12311-LO', '12382', '', NULL, 'Hermione', 'Granger', '456 Oak St'),
+('PK-12388-RI', '38474', '', NULL, 'Albus', 'Dumbledore', '789 Pine St'),
+('AZ-18983-LI', '93847', '', NULL, 'Severus', 'Snape', '101 Maple St');
 
 INSERT INTO parcel_states (parcel_id, state) VALUES
 (1, 'Shipped'),
