@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Login with Reference{% endblock %}
+{% block content %}
+    <div class="form-container">
+        <form class="form" method="post">
+            <label for="reference">Reference:</label>
+            <input type="text" id="reference" name="reference" required>
+            <label for="zip_code">ZIP Code:</label>
+            <input type="text" id="zip_code" name="zip_code" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+{% endblock %}

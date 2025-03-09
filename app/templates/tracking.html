@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Tracking{% endblock %}
+{% block content %}
+    <h2>Parcel Tracking Details</h2>
+    <p><strong>Reference:</strong> {{ parcel.reference }}</p>
+    <p><strong>First Name:</strong> {{ parcel.first_name }}</p>
+    <p><strong>Last Name:</strong> {{ parcel.last_name }}</p>
+    <p><strong>Delivery Address:</strong> {{ parcel.delivery_address }}</p>
+    <p><strong>Phone:</strong> {{ parcel.phone }}</p>
+    <h3>Parcel States</h3>
+    <ul>
+        {% for state in states %}
+            <li>{{ state.state }} - {{ state.timestamp }}</li>
+        {% endfor %}
+    </ul>
+    <form method="post">
+        <label for="new_location">New Location:</label>
+        <input type="text" id="new_location" name="new_location" required>
+        <button type="submit">Update Location</button>
+    </form>
+{% endblock %}
